@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyce Chapter 20 | Velvet &amp; Midnight</title>
+
+    <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Ambient Bokeh & Glitter Canvases -->
+    <canvas id="particle-canvas"></canvas>
+    <canvas id="glitter-canvas"></canvas>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="toast-wrapper">
+        <div class="toast-box">
+            <span id="toast-icon">💜</span>
+            <span id="toast-message">Happy 20th birthday, Joyce.</span>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         1. VELVET ENVELOPE INTRO OVERLAY
+    ====================================================================== -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="intro-glow"></div>
+
+        <div class="intro-header">
+            <div class="intro-badge">Private Invitation • Celebration Day</div>
+            <h1 class="intro-title luxe-gradient">Joyce, Chapter 20</h1>
+            <p class="intro-sub">Break the seal to step inside your birthday celebration.</p>
+        </div>
+
+        <div id="envelope-box" class="envelope-wrapper" onclick="openBirthdaySurprise()" role="button" tabindex="0"
+            aria-label="Break the wax seal to open Joyce's 20th birthday surprise">
+            <div class="envelope-inner-card">
+                <p>For Joyce, turning 20</p>
+                <p>Unlocking today</p>
+            </div>
+
+            <svg class="envelope-svg" viewBox="0 0 400 250" preserveAspectRatio="none">
+                <polygon points="0,0 205,130 0,250" fill="#171322" />
+                <polygon points="400,0 195,130 400,250" fill="#130f1d" />
+                <polygon points="0,250 200,118 400,250" fill="#1c1729" stroke="#332b47" stroke-width="1" />
+            </svg>
+
+            <div class="envelope-flap">
+                <svg class="envelope-svg" viewBox="0 0 400 130" preserveAspectRatio="none">
+                    <polygon points="0,0 200,130 400,0" fill="#221b33" stroke="#4c3d6e" stroke-width="1" />
+                </svg>
+            </div>
+
+            <div class="wax-seal">
+                <span class="wax-initial">J</span>
+                <span class="wax-label">Open</span>
+            </div>
+        </div>
+
+        <button type="button" class="btn-primary" onclick="openBirthdaySurprise()">
+            <span>Enter Your 20th</span>
+            <span aria-hidden="true">→</span>
+        </button>
+    </div>
+
+    <!-- =====================================================================
+         2. STICKY HEADER
+    ====================================================================== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="#hero" class="brand-logo">
+                <span class="brand-dot"></span>
+                <span>JOYCE <span class="brand-sub">XX</span></span>
+            </a>
+
+            <nav class="nav-links" aria-label="Page sections">
+                <a href="#love-letter">Letter</a>
+                <a href="#her-frame">Your Frame</a>
+                <a href="#cake-section">20 Candles</a>
+            </nav>
+
+            <div class="header-actions">
+                <button type="button" id="jingle-btn" class="btn-chip" onclick="playBirthdayJingle()"
+                    aria-label="Play Birthday Jingle">
+                    <span>🎵</span>
+                    <span>Play Jingle</span>
+                </button>
+                <button type="button" id="music-toggle-btn" class="btn-chip btn-chip-accent" onclick="toggleMusic()"
+                    aria-label="Toggle Ambient Chimes">
+                    <span>✨</span>
+                    <span id="music-label">Ambient Vibe</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         3. MAIN EDITORIAL PAGE CONTENT
+    ====================================================================== -->
+    <main>
+
+        <!-- Hero & Popping Kiss Button -->
+        <section id="hero" class="hero-section">
+            <div class="hero-glow"></div>
+
+            <div class="hero-pill">
+                <span class="pill-dot"></span>
+                <span>Officially Twenty</span>
+                <span class="pill-dot"></span>
+            </div>
+
+            <h1 class="hero-title luxe-gradient">
+                Happy 20th, <span>Joyce.</span>
+            </h1>
+
+            <p class="hero-desc">
+                Today belongs to the girl who owns every room she walks into. Twenty looks intoxicating on you,
+                effortless, captivating, and impossible to resist.
+            </p>
+
+            <div class="kiss-cta-group">
+                <button type="button" id="pop-kiss-btn" class="btn-kiss" onclick="popVirtualKiss()">
+                    <span class="kiss-emoji">💋</span>
+                    <span>Pop A Kiss</span>
+                    <span id="kiss-counter-badge" class="kiss-badge">0</span>
+                </button>
+                <span class="kiss-hint">Tap to pop glitter and claim your birthday kisses</span>
+            </div>
+        </section>
+
+        <!-- Single Rounded Photo Upload Frame for Joyce -->
+        <section id="her-frame" class="frame-section">
+            <span class="eyebrow-label">Your Spotlight</span>
+            <h2 class="section-heading luxe-gradient">Joyce At Twenty</h2>
+            <p class="section-sub">Tap your rounded frame to upload your favorite photo of yourself</p>
+
+            <div class="photo-ring-outer" onclick="triggerPhotoUpload()" role="button" tabindex="0"
+                aria-label="Upload your birthday photo into your rounded frame">
+                <input type="file" id="upload-input-joyce" accept="image/*" class="hidden"
+                    onchange="handlePhotoSelected(event)">
+                <div class="photo-ring-inner">
+                    <img id="preview-img-joyce" alt="Joyce's 20th birthday photo" class="hidden">
+                    <div id="placeholder-joyce" class="upload-placeholder">
+                        <div class="upload-icon-circle">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                        <span class="upload-title">Upload Your Pic</span>
+                        <span class="upload-caption">Tap to choose photo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Direct Love Letter to Joyce -->
+        <section id="love-letter" class="letter-section">
+            <article class="velvet-letter-card">
+                <div class="letter-header">
+                    <div>
+                        <span class="eyebrow-label">Straight From My Heart</span>
+                        <h2 class="section-heading luxe-gradient">To Joyce, On Turning 20</h2>
+                    </div>
+                    <div class="letter-roman-badge">XX</div>
+                </div>
+
+                <div class="letter-body">
+                    <p class="letter-salutation">Happy 20th birthday, Joyce.</p>
+
+                    <p>
+                        I made this space just for you because watching you step into twenty feels truly special. There
+                        is an effortless allure about you that pulls me in every single time, and today I want you to
+                        feel celebrated, adored, and deeply desired.
+                    </p>
+
+                    <p>
+                        You have no idea what you do to me when you look my way. It is the way <span
+                            class="letter-highlight">your eyes</span> lock onto mine and hold on just a second too long,
+                        warm, expressive, and dangerously magnetic. And it is <span class="letter-highlight">your
+                            lips</span>, soft, sculpted, and distracting in the best way, making it nearly impossible to
+                        focus on anything else whenever you are close.
+                    </p>
+
+                    <p>
+                        You are effortlessly sweet when you laugh, breathtaking when you dress up, and the late night
+                        energy you carry stays on my mind long after we say goodnight. Entering your twenties only makes
+                        your confidence, beauty, and feminine grace shine even brighter.
+                    </p>
+
+                    <p>
+                        Here is to more beautiful years and prosperity ahead of you, Joyce. May this new chapter bring
+                        you everything your heart craves, unforgettable moments, bold adventures, and every reminder of
+                        how intoxicating you truly are. Happy twentieth, gorgeous.
+                    </p>
+                </div>
+
+                <div class="letter-footer">
+                    <div>
+                        <p class="letter-signoff">From MJ</p>
+                        <p class="letter-note">Celebrating you today and always</p>
+                    </div>
+                    <span class="letter-heart">💜</span>
+                </div>
+            </article>
+        </section>
+
+        <!-- 20 Candles Cake & 20 Realistic Balloons -->
+        <section id="cake-section" class="cake-section">
+            <div class="cake-container">
+                <span class="eyebrow-label">Make Your 20th Wish, Joyce</span>
+                <h2 class="section-heading luxe-gradient">Blow Out All 20 Candles</h2>
+                <p id="candle-status-text" class="cake-status">
+                    Tap individual candles on the cake or press the button below to blow out all 20 flames.
+                </p>
+
+                <div class="cake-stage">
+                    <!-- 20 Realistic Shaded Balloons -->
+                    <div id="balloons-ring" class="balloons-ring"></div>
+
+                    <!-- Two-Tier Velvet & Silver Cake with 20 Candles -->
+                    <div class="cake-assembly">
+                        <!-- Top Tier: 8 Candles -->
+                        <div id="candles-row-top" class="candles-row-top"></div>
+
+                        <div class="cake-tier-top">
+                            <div class="icing-drips-row">
+                                <div class="icing-drip-silver"></div>
+                                <div class="icing-drip-silver tall"></div>
+                                <div class="icing-drip-silver short"></div>
+                                <div class="icing-drip-silver"></div>
+                                <div class="icing-drip-silver"></div>
+                            </div>
+                            <div class="tier-neon-trim"></div>
+                        </div>
+
+                        <!-- Bottom Tier: 12 Candles -->
+                        <div id="candles-row-bottom" class="candles-row-bottom"></div>
+
+                        <div class="cake-tier-bottom">
+                            <div class="icing-drips-row">
+                                <div class="icing-drip-purple"></div>
+                                <div class="icing-drip-purple tall"></div>
+                                <div class="icing-drip-purple short"></div>
+                                <div class="icing-drip-purple"></div>
+                                <div class="icing-drip-purple"></div>
+                            </div>
+                            <div class="pearls-row">
+                                <span class="silver-pearl"></span>
+                                <span class="silver-pearl"></span>
+                                <span class="silver-pearl"></span>
+                                <span class="silver-pearl"></span>
+                                <span class="silver-pearl"></span>
+                                <span class="silver-pearl"></span>
+                                <span class="silver-pearl"></span>
+                            </div>
+                        </div>
+
+                        <!-- Metallic Silver Cake Stand -->
+                        <div class="cake-stand-top"></div>
+                        <div class="cake-stand-stem"></div>
+                        <div class="cake-stand-base"></div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="cake-controls">
+                        <button type="button" id="blow-all-btn" class="btn-action-purple" onclick="blowAllCandles()">
+                            <span>🌬️</span>
+                            <span>Blow Out All 20 Candles</span>
+                        </button>
+                        <button type="button" id="relight-btn" class="btn-action-slate hidden"
+                            onclick="relightCandles()">
+                            <span>✨</span>
+                            <span>Relight All 20 Candles</span>
+                        </button>
+                        <button type="button" class="btn-action-slate" onclick="playBirthdayJingle()">
+                            <span>🎂</span>
+                            <span>Play Birthday Jingle</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================================
+         4. FOOTER
+    ====================================================================== -->
+    <footer class="site-footer">
+        <p class="footer-signature luxe-gradient">From MJ</p>
+        <p class="footer-sub">Joyce Chapter 20</p>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
